@@ -36,6 +36,6 @@ public class Track {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id", referencedColumnName = "video_id")
-    @ToString.Exclude
+    //@ToString.Exclude
     private List<Point> points;
 }

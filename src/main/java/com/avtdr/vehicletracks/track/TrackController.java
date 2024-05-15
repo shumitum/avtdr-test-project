@@ -7,11 +7,13 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
@@ -26,15 +28,14 @@ public class TrackController {
     @GetMapping("/points")
     @ResponseStatus(HttpStatus.OK)
     public List<Point> getTrackPoints(@RequestParam(required = false) String deviceId,
-                                      @RequestParam(required = false) LocalDateTime rangeStart,
-                                      @RequestParam(required = false) LocalDateTime rangeEnd,
+                                      @RequestParam(required = false) ZonedDateTime rangeStart,
+                                      @RequestParam(required = false) ZonedDateTime rangeEnd,
                                       @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                       @RequestParam(defaultValue = "10") @Positive int size) {
-        log.info("Запрос на получение списка точек с параметрами deviceId={}, rangeStart={}, rangeEnd={}",
-                deviceId, rangeStart, rangeEnd);
+        log.info("Запрос на получение списка точек с параметрами deviceId={}, rangeStart={}, rangeEnd={}, from={}, size={} ",
+                deviceId, rangeStart, rangeEnd, from, size);
         timeValidationService.checkStartTimeIsBeforeEndTime(rangeStart, rangeEnd);
-        trackService.getTrackPoints(deviceId, rangeStart, rangeEnd, from, size);
-        return null;
+        return trackService.getTrackPoints(deviceId, rangeStart, rangeEnd, from, size);
     }
 
     @GetMapping("/device/{deviceId}/max-velocity-point")

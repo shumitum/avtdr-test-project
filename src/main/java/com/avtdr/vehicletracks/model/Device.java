@@ -1,6 +1,9 @@
 package com.avtdr.vehicletracks.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -17,8 +20,7 @@ import java.time.ZonedDateTime;
 @ToString
 public class Device {
     @Id
-    @Column(name = "device_id")
-    //@GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "device_id", unique = true)
     private String deviceId;
 
     @NotNull

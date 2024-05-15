@@ -5,12 +5,12 @@ import com.avtdr.vehicletracks.model.Device;
 import com.avtdr.vehicletracks.model.Point;
 import com.avtdr.vehicletracks.model.Track;
 import com.avtdr.vehicletracks.point.PointRepository;
+import com.avtdr.vehicletracks.utilities.PageParam;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -23,8 +23,9 @@ public class TrackServiceImpl implements TrackService {
     private final DeviceRepository deviceRepository;
 
     @Override
-    public void getTrackPoints(String deviceId, LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
-
+    @Transactional
+    public List<Point> getTrackPoints(String deviceId, ZonedDateTime rangeStart, ZonedDateTime rangeEnd, int from, int size) {
+        return pointRepository.getTrackPoints(deviceId, rangeStart, rangeEnd, PageParam.of(from, size));
     }
 
     @Override
@@ -61,8 +62,9 @@ public class TrackServiceImpl implements TrackService {
 
 
         System.out.println(point);
-
+        System.out.println("========================\n");
         System.out.println(device1);
+        System.out.println("========================\n");
         Track track = Track.builder()
                 .videoId(1687154445296L)
                 .videoCreationDate(ZonedDateTime.now())

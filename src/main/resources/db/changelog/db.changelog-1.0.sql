@@ -29,6 +29,5 @@ create TABLE IF NOT EXISTS point
     bearing        double precision            not null,
     velocity       double precision            not null,
     point_datetime timestamp(6) with time zone not null,
-    constraint point_pk primary key (point_id),
-    constraint fk_point_to_track foreign key (video_id) references track (video_id) on delete cascade
+    constraint point_pk primary key (point_id)
 );

@@ -2,10 +2,11 @@ package com.avtdr.vehicletracks.track;
 
 import com.avtdr.vehicletracks.model.Point;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.List;
 
 public interface TrackService {
-    void getTrackPoints(String deviceId, LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size);
+    List<Point> getTrackPoints(String deviceId, ZonedDateTime rangeStart, ZonedDateTime rangeEnd, int from, int size);
 
     Point getMaxVelocityPoint(String deviceId);
 
