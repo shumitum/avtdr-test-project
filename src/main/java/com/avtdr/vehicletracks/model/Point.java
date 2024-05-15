@@ -8,7 +8,8 @@ import java.time.ZonedDateTime;
 @Entity
 @Builder
 @RequiredArgsConstructor
-@Table(name = "points", schema = "public")
+@AllArgsConstructor
+@Table(name = "point", schema = "public")
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -19,10 +20,8 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "video_id", referencedColumnName = "video_id")
-    @ToString.Exclude
-    private Video video;
+    @Column(name = "video_id")
+    private Long videoId;
 
     @Column(name = "lat")
     private Double lat;

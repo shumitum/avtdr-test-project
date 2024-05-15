@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.UUID;
 
 @Entity
 @Builder
 @RequiredArgsConstructor
-@Table(name = "devices", schema = "public")
+@AllArgsConstructor
+@Table(name = "device", schema = "public")
 @EqualsAndHashCode
 @Getter
 @Setter
@@ -18,8 +18,8 @@ import java.util.UUID;
 public class Device {
     @Id
     @Column(name = "device_id")
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID deviceId;
+    //@GeneratedValue(strategy = GenerationType.UUID)
+    private String deviceId;
 
     @NotNull
     @Builder.Default
