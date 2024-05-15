@@ -2,17 +2,16 @@ package com.avtdr.vehicletracks.track;
 
 import com.avtdr.vehicletracks.model.Point;
 import com.avtdr.vehicletracks.model.Track;
+import com.avtdr.vehicletracks.point.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.track.validation.TimeValidationService;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class TrackController {
 
     @GetMapping("/device/{deviceId}/max-velocity-point")
     @ResponseStatus(HttpStatus.OK)
-    public Point getMaxVolocityPoint(@PathVariable String deviceId) {
+    public MaxVelocityPointDto getMaxVelocityPoint(@PathVariable String deviceId) {
         log.info("Запрос на получение точки с максимальной скоростью устройства с ID={}", deviceId);
         return trackService.getMaxVelocityPoint(deviceId);
     }
