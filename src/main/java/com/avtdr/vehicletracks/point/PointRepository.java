@@ -1,6 +1,6 @@
 package com.avtdr.vehicletracks.point;
 
-import com.avtdr.vehicletracks.model.Point;
+import com.avtdr.vehicletracks.point.model.Point;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

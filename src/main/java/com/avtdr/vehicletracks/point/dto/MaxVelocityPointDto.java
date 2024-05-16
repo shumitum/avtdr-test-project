@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.point;
+package com.avtdr.vehicletracks.point.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

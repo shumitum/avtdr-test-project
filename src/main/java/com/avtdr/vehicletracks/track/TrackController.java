@@ -1,8 +1,8 @@
 package com.avtdr.vehicletracks.track;
 
-import com.avtdr.vehicletracks.model.Point;
-import com.avtdr.vehicletracks.model.Track;
-import com.avtdr.vehicletracks.point.MaxVelocityPointDto;
+import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
+import com.avtdr.vehicletracks.point.model.Point;
+import com.avtdr.vehicletracks.track.dto.TrackSummaryDto;
 import com.avtdr.vehicletracks.track.validation.TimeValidationService;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -46,21 +46,20 @@ public class TrackController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<Track> getAllTracks() {
+    public List<TrackSummaryDto> getAllTracks() {
         log.info("Запрос на получение списка треков");
-        trackService.getAllTracks();
-        return null;
+        return trackService.getAllTracks();
     }
 
-    @GetMapping("/test")
-    @ResponseStatus(HttpStatus.OK)
-    public void test() {
-        trackService.test();
-    }
-
-    @GetMapping("/tryy")
-    @ResponseStatus(HttpStatus.OK)
-    public void tryy() {
-        trackService.tryy();
-    }
+    //@GetMapping("/test")
+    //@ResponseStatus(HttpStatus.OK)
+    //public void test() {
+    //    trackService.test();
+    //}
+//
+    //@GetMapping("/tryy")
+    //@ResponseStatus(HttpStatus.OK)
+    //public void tryy() {
+    //    trackService.tryy();
+    //}
 }

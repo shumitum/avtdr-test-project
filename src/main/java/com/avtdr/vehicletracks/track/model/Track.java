@@ -1,5 +1,7 @@
-package com.avtdr.vehicletracks.model;
+package com.avtdr.vehicletracks.track.model;
 
+import com.avtdr.vehicletracks.device.model.Device;
+import com.avtdr.vehicletracks.point.model.Point;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -32,10 +34,11 @@ public class Track {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "device_id", referencedColumnName = "device_id")
+    @ToString.Exclude
     private Device device;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id", referencedColumnName = "video_id")
-    //@ToString.Exclude
+    @ToString.Exclude
     private List<Point> points;
 }

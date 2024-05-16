@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.utilities;
+package com.avtdr.vehicletracks.utils;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.PageRequest;

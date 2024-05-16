@@ -1,6 +1,7 @@
 package com.avtdr.vehicletracks.point;
 
-import com.avtdr.vehicletracks.model.Point;
+import com.avtdr.vehicletracks.point.model.Point;
+import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

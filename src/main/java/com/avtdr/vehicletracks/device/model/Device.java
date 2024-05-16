@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.model;
+package com.avtdr.vehicletracks.device.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

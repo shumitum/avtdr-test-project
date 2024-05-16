@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.model;
+package com.avtdr.vehicletracks.point.model;
 
 import jakarta.persistence.*;
 import lombok.*;
