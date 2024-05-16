@@ -20,7 +20,7 @@ import java.time.ZonedDateTime;
 @ToString
 public class Device {
     @Id
-    @Column(name = "device_id", unique = true)
+    @Column(name = "device_id")
     private String deviceId;
 
     @NotNull

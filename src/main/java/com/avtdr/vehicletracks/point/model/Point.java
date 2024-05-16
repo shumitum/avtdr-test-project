@@ -37,5 +37,4 @@ public class Point {
 
     @Column(name = "point_datetime")
     private ZonedDateTime pointDateTime;
-
 }
