@@ -25,17 +25,10 @@ public interface PointRepository extends JpaRepository<Point, Long> {
             "where (p.velocity = (select max(p.velocity) from Point as p " +
             "left join Track as t on p.videoId = t.videoId " +
             "where (t.device.deviceId = :deviceId)))")
-    Optional<Point> getMaxVelocityPointByDeviceId(@Param("deviceId")String deviceId);
+    Optional<Point> getMaxVelocityPointByDeviceId(@Param("deviceId") String deviceId);
 
-/*    @Query("select p from Point as p " +
-            "where ((:users) is NULL or e.initiator.id in :users) " +
-            //"and ((:states) is NULL or e.state in :states) " +
-            //"and ((:states) is NULL or e.state in :states) " +
-            //"and ((:categories) is NULL or e.category.id in :categories) " +
-            "and (cast(:rangeStart as java.time.LocalDateTime) is NULL or p.pointDateTime > :rangeStart) " +
-            "and (cast(:rangeEnd as java.time.LocalDateTime) is NULL or p.pointDateTime < :rangeEnd)")
-    List<Point> getTrackPoints(@Param("deviceId") String deviceId,
-                               @Param("rangeStart") LocalDateTime rangeStart,
-                               @Param("rangeEnd") LocalDateTime rangeEnd,
-                               PageRequest page);*/
+    @Query(value = "SELECT EXTRACT(epoch FROM (SELECT MAX(point_datetime) - MIN(point_datetime)" +
+            " FROM point where video_id = ?1))",
+            nativeQuery = true)
+    Long getTrackDurationByVideoId(Long videoId);
 }

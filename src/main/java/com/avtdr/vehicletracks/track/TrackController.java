@@ -50,16 +50,4 @@ public class TrackController {
         log.info("Запрос на получение списка треков");
         return trackService.getAllTracks();
     }
-
-    //@GetMapping("/test")
-    //@ResponseStatus(HttpStatus.OK)
-    //public void test() {
-    //    trackService.test();
-    //}
-//
-    //@GetMapping("/tryy")
-    //@ResponseStatus(HttpStatus.OK)
-    //public void tryy() {
-    //    trackService.tryy();
-    //}
 }
