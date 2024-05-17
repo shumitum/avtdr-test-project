@@ -48,6 +48,13 @@ class TrackControllerTest {
                         ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 2),
                                 ZoneId.of("Z")),
                         0, 10);
+
+        verify(timeValidationService, times(1))
+                .checkStartTimeIsBeforeEndTime(
+                        ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 1),
+                                ZoneId.of("Z")),
+                        ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 2),
+                                ZoneId.of("Z")));
     }
 
     @Test
@@ -71,13 +78,25 @@ class TrackControllerTest {
                         -10, 10);
     }
 
-
-
     @Test
-    void getMaxVelocityPoint() {
+    @SneakyThrows
+    void getMaxVelocityPoint_whenInvokedWithCorrectParams_thenReturnOkStatus() {
+        mockMvc.perform(get("/tracks/device/{deviceId}/max-velocity-point", "32e59c906a958812")
+                        .contentType("application/json"))
+                .andExpect(status().isOk());
+
+        verify(trackService, times(1))
+                .getMaxVelocityPoint("32e59c906a958812");
     }
 
     @Test
-    void getAllTracks() {
+    @SneakyThrows
+    void getAllTracks_whenInvokedWithCorrectParams_thenReturnOkStatus() {
+        mockMvc.perform(get("/tracks/all")
+                        .contentType("application/json"))
+                .andExpect(status().isOk());
+
+        verify(trackService, times(1))
+                .getAllTracks();
     }
 }
