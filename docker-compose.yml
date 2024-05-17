@@ -1,44 +1,22 @@
 version: '3.1'
 services:
-  stats-server:
-    build: ./statistics/stats-service
-    ports:
-      - "9090:9090"
-    depends_on:
-      - stats-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/ewm_stats
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
-  stats-db:
-    image: postgres:14-alpine
-    container_name: ewm_stats_db
-    ports:
-      - "6541:5432"
-    environment:
-      - POSTGRES_DB=ewm_stats
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
-  ewm-service:
-    build: ./main-service
+  avtdr-test-project:
+    build: ./
     ports:
       - "8080:8080"
     depends_on:
-      - ewm-db
+      - avtdr-db
     environment:
-      - STATS_SERVER_URL=http://stats-server:9090
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm_main
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://avtdr-db:5432/tracks_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  ewm-db:
-    image: postgres:14-alpine
-    container_name: ewm_main_db
+  avtdr-db:
+    image: postgres:12-alpine
+    container_name: avtdr_tracks_db
     ports:
       - "6540:5432"
     environment:
-      - POSTGRES_DB=ewm_main
+      - POSTGRES_DB=tracks_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

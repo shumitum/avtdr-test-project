@@ -34,15 +34,15 @@ public class TrackController {
             description = "Эндпоинт принимает ID устройства, дату и время начала и конца выборки " +
                     "(в формате - 2023-06-19T06:01:00Z) и параметры пагинации (номер страницы и кол-во элементов на ней.")
     public List<Point> getTrackPoints(@Parameter(description = "ID устройства", example = "32e59c906a958812")
-                                      @RequestParam(required = false) String deviceId,
+                                      @RequestParam(name = "deviceId", required = false) String deviceId,
                                       @Parameter(description = "Дата и время начала выборки", example = "2023-06-19T06:01:00Z")
-                                      @RequestParam(required = false) ZonedDateTime rangeStart,
+                                      @RequestParam(name = "rangeStart", required = false) ZonedDateTime rangeStart,
                                       @Parameter(description = "Дату и время конца выборки", example = "2023-06-19T06:02:00Z")
-                                      @RequestParam(required = false) ZonedDateTime rangeEnd,
+                                      @RequestParam(name = "rangeEnd", required = false) ZonedDateTime rangeEnd,
                                       @Parameter(description = "Номер страницы")
-                                      @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                      @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero int from,
                                       @Parameter(description = "Количество элементов на странице")
-                                      @RequestParam(defaultValue = "10") @Positive int size) {
+                                      @RequestParam(name = "size", defaultValue = "10") @Positive int size) {
         log.info("Запрос на получение списка точек с параметрами deviceId={}, rangeStart={}, rangeEnd={}, from={}, size={} ",
                 deviceId, rangeStart, rangeEnd, from, size);
         timeValidationService.checkStartTimeIsBeforeEndTime(rangeStart, rangeEnd);
@@ -51,7 +51,8 @@ public class TrackController {
 
     @GetMapping("/device/{deviceId}/max-velocity-point")
     @ResponseStatus(HttpStatus.OK)
-    public MaxVelocityPointDto getMaxVelocityPoint(@PathVariable String deviceId) {
+    public MaxVelocityPointDto getMaxVelocityPoint(@Parameter(description = "ID устройства", example = "32e59c906a958812")
+                                                   @PathVariable("deviceId") String deviceId) {
         log.info("Запрос на получение точки с максимальной скоростью устройства с ID={}", deviceId);
         return trackService.getMaxVelocityPoint(deviceId);
     }
