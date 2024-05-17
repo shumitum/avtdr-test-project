@@ -2,6 +2,7 @@ package com.avtdr.vehicletracks.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,5 +31,12 @@ public class ErrorHandler {
     public ErrorResponse handleNoSuchElementException(final NoSuchElementException exc, HttpServletRequest request) {
         log.warn("Получен статус 404 NOT FOUND {}", exc.getMessage());
         return new ErrorResponse(exc.getMessage(), HttpStatus.NOT_FOUND.toString(), request.getRequestURI());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstraintViolationException(final ConstraintViolationException exc, HttpServletRequest request) {
+        log.warn("Получен статус 400 BAD_REQUEST {}", exc.getMessage());
+        return new ErrorResponse(exc.getMessage(), HttpStatus.BAD_REQUEST.toString(), request.getRequestURI());
     }
 }

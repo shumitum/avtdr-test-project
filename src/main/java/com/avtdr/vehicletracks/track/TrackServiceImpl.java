@@ -81,7 +81,7 @@ public class TrackServiceImpl implements TrackService {
         if (points.size() < 2) {
             return 0.0;
         }
-        Double distance = 0.0;
+        double distance = 0.0;
         for (int i = 1; i < points.size(); i++) {
             Point pointFrom = points.get(i - 1);
             Point pointTo = points.get(i);
