@@ -25,4 +25,4 @@ docker-compose up
 
 Swagger UI для проверки работы API будет доступен по ссылке http://localhost:8080/swagger-ui/index.html  
 
-Коллекция postman запросов к эндпойнтам доступна по [ссылке]().
+Коллекция postman запросов к эндпойнтам доступна по [ссылке](https://github.com/shumitum/avtdr-test-project/blob/main/postman/TrackController.postman_collection.json).
