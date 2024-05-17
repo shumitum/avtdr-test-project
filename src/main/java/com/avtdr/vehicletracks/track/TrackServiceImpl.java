@@ -68,7 +68,7 @@ public class TrackServiceImpl implements TrackService {
     }
 
     private Double calculateAvfVelocity(TrackSummaryDto track) {
-        return track.getDuration() != 0 ? (track.getDistance() / track.getDuration() * 3.6) : 0.0;
+        return track.getDuration() != 0 ? track.getDistance() / track.getDuration() : 0.0;
     }
 
     private Long calculateDuration(List<Point> points) {
