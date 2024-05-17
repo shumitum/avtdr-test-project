@@ -25,7 +25,7 @@ public class Track {
     private Long trackId;
 
     @NotNull
-    @Column(name = "video_id")
+    @Column(name = "video_id", unique = true)
     private Long videoId;
 
     @NotNull
