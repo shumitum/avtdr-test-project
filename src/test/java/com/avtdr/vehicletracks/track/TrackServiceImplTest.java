@@ -3,10 +3,7 @@ package com.avtdr.vehicletracks.track;
 import com.avtdr.vehicletracks.device.DeviceService;
 import com.avtdr.vehicletracks.point.PointRepository;
 import com.avtdr.vehicletracks.point.model.Point;
-import com.avtdr.vehicletracks.track.model.Track;
 import com.avtdr.vehicletracks.utils.PageParam;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,9 +28,6 @@ class TrackServiceImplTest {
     private TrackServiceImpl trackService;
 
     @Mock
-    private TrackRepository trackRepository;
-
-    @Mock
     private PointRepository pointRepository;
 
     @Mock
@@ -41,16 +35,6 @@ class TrackServiceImplTest {
 
     private final ZonedDateTime rangeStart = ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 1), ZoneId.of("Z"));
     private final ZonedDateTime rangeEnd = ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 2), ZoneId.of("Z"));
-
-
-    @BeforeEach
-    void setUp() {
-        Track track = new Track();
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
 
     @Test
     void getTrackPoints_whenInvokeWithValidParameters_thenReturnListOfTrackPoints() {
@@ -70,14 +54,5 @@ class TrackServiceImplTest {
 
         verify(pointRepository, times(0))
                 .getTrackPoints("32e59c906a958812", rangeStart, rangeEnd, PageParam.of(0, 10));
-    }
-
-
-    @Test
-    void getMaxVelocityPoint() {
-    }
-
-    @Test
-    void getAllTracks() {
     }
 }

@@ -3,6 +3,7 @@ package com.avtdr.vehicletracks.track;
 import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
 import com.avtdr.vehicletracks.track.dto.TrackSummaryDto;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @SpringBootTest
 @Testcontainers
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 class TrackServiceImplIntegrationTest {
 
     /**
@@ -32,8 +34,7 @@ class TrackServiceImplIntegrationTest {
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
 
-    @Autowired
-    private TrackService trackService;
+    private final TrackService trackService;
 
     private final ZonedDateTime rangeStart = ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 1), ZoneId.of("Z"));
     private final ZonedDateTime rangeEnd = ZonedDateTime.of(LocalDateTime.of(2023, 6, 19, 6, 2), ZoneId.of("Z"));
@@ -47,6 +48,14 @@ class TrackServiceImplIntegrationTest {
     }
 
     @Test
+    void getTrackPoints_whenInvokedWithInCorrectParameters_thenReturnNoSuchElementException() {
+        String deviceId = "qwe123";
+
+        assertThrows(NoSuchElementException.class, () ->
+                trackService.getTrackPoints(deviceId, rangeStart, rangeEnd, 0, 100));
+    }
+
+    @Test
     void getMaxVelocityPoint_whenInvokeWithValidDeviceId_thenReturnMaxVelocityPoint() {
         String deviceId = "5579dd7e3f612732";
         MaxVelocityPointDto maxVelocityPoint = trackService.getMaxVelocityPoint(deviceId);
@@ -57,7 +66,7 @@ class TrackServiceImplIntegrationTest {
     }
 
     @Test
-    void getMaxVelocityPoint_whenInvokeWithInValidDeviceId_thenReturnException() {
+    void getMaxVelocityPoint_whenInvokeWithInValidDeviceId_thenReturnNoSuchElementException() {
         String deviceId = "qwe123";
 
         assertThrows(NoSuchElementException.class, () -> trackService.getMaxVelocityPoint(deviceId));

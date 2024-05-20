@@ -22,7 +22,7 @@ public class GeoController {
 
     @GetMapping("/tracks/all")
     @ResponseStatus(HttpStatus.OK)
-    public GeoJson getAlltracksGeoJson() {
+    public GeoJson getAllTracksGeoJson() {
         log.info("Запрос всех треков в формате GeoJson");
         return geoService.getAlltracksGeoJson();
     }
