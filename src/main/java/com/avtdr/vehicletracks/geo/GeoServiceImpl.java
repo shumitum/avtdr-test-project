@@ -1,6 +1,6 @@
 package com.avtdr.vehicletracks.geo;
 
-import com.avtdr.vehicletracks.geo.model.*;
+import com.avtdr.vehicletracks.geo.geojson.*;
 import com.avtdr.vehicletracks.track.TrackRepository;
 import com.avtdr.vehicletracks.track.model.Track;
 import lombok.RequiredArgsConstructor;

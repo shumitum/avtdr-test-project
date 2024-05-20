@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.geo.model;
+package com.avtdr.vehicletracks.geo.geojson;
 
 import lombok.Builder;
 import lombok.Data;

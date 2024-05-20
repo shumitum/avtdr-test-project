@@ -12,6 +12,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class VehicleTracksApplicationTests {
 
+    /**Не забывать запускать докер перед тестами*/
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
