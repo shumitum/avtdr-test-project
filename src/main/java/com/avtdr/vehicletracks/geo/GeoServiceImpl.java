@@ -31,7 +31,7 @@ public class GeoServiceImpl implements GeoService {
         for (Track track : tracks) {
             final Geometry trackGeometry = getTrackGeometry(track);
             Feature trackFeature = Feature.builder()
-                    .type(FeatureType.FEATURE.type)
+                    .type(FeatureType.FEATURE.getType())
                     .properties(Map.of("TrackID", track.getTrackId().toString(),
                             "VideoID", track.getVideoId().toString()))
                     .geometry(trackGeometry)
@@ -41,7 +41,7 @@ public class GeoServiceImpl implements GeoService {
         }
 
         return GeoJson.builder()
-                .type(GeoJsonType.FEATURE_COLLECTION.type)
+                .type(GeoJsonType.FEATURE_COLLECTION.getType())
                 .features(features)
                 .build();
     }
@@ -56,7 +56,7 @@ public class GeoServiceImpl implements GeoService {
         List<List<Double>> coordinates = getTackCoordinates(track);
 
         return Geometry.builder()
-                .type(GeometryType.LINE_STRING.type)
+                .type(GeometryType.LINE_STRING.getType())
                 .coordinates(coordinates)
                 .build();
     }
