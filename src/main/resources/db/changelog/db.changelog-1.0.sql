@@ -17,11 +17,13 @@ create TABLE IF NOT EXISTS track
     video_creation_date timestamp(6) with time zone not null,
     device_id           varchar                     not null,
     constraint track_pk primary key (track_id),
-    constraint fk_track_to_device foreign key (device_id) references device (device_id) on delete cascade
+    constraint fk_track_to_device foreign key (device_id) references device (device_id)
+        on delete restrict
+        on update cascade
 );
 
 create index device_id_idx on track (device_id);
-create unique index video_id_unique_idx on track (video_id);
+--create unique index video_id_unique_idx on track (video_id);
 
 create TABLE IF NOT EXISTS point
 (
@@ -32,6 +34,7 @@ create TABLE IF NOT EXISTS point
     bearing        double precision            not null,
     velocity       double precision            not null,
     point_datetime timestamp(6) with time zone not null,
+    location       geometry(point, 4326)       not null,
     constraint point_pk primary key (point_id)
 );
 

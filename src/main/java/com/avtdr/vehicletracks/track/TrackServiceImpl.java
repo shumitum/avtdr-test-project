@@ -6,6 +6,7 @@ import com.avtdr.vehicletracks.point.PointRepository;
 import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
 import com.avtdr.vehicletracks.track.dto.TrackSummaryDto;
+import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import com.avtdr.vehicletracks.track.model.Track;
 import com.avtdr.vehicletracks.utils.PageParam;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,12 @@ public class TrackServiceImpl implements TrackService {
         }
 
         return trackSummaryList;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrackSummary> getAllTracksTest() {
+    return pointRepository.findAllTrackSummary();
     }
 
     private Double calculateAvfVelocity(TrackSummaryDto track) {

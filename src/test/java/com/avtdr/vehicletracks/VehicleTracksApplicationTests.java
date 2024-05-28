@@ -3,7 +3,6 @@ package com.avtdr.vehicletracks;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -14,7 +13,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Testcontainers
 class VehicleTracksApplicationTests {
 
-    /**Не забывать запускать докер перед тестами*/
+    /**
+     * Не забывать запускать докер перед тестами
+     */
     @Container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
@@ -25,8 +26,8 @@ class VehicleTracksApplicationTests {
         assertThat(postgres.isRunning()).isTrue();
     }
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

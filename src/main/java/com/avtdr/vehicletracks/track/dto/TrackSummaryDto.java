@@ -18,5 +18,5 @@ public class TrackSummaryDto {
     private Double avgVelocity;
 
     @Schema(description = "пройденное расстояние в метрах", example = "4769.000418858445")
-    private Double distance;
+    private Double distance; //float
 }

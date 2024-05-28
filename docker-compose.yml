@@ -7,16 +7,27 @@ services:
     depends_on:
       - avtdr-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://avtdr-db:5432/tracks_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://avtdr-db:6540/tracks_db # следует указывать host-port
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
   avtdr-db:
-    image: postgres:12-alpine
+    image: postgis/postgis:12-3.4-alpine
+    restart: always
     container_name: avtdr_tracks_db
     ports:
-      - "6540:5432"
+      - "6540:5432" #host/container
     environment:
       - POSTGRES_DB=tracks_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+ # avtdr-db:
+ #   image: postgres:12-alpine
+ #   container_name: avtdr_tracks_db
+ #   ports:
+ #     - "6540:5432"
+ #   environment:
+ #     - POSTGRES_DB=tracks_db
+ #     - POSTGRES_USER=postgres
+ #     - POSTGRES_PASSWORD=postgres

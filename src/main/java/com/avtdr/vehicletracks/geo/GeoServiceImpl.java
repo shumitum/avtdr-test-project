@@ -5,6 +5,9 @@ import com.avtdr.vehicletracks.track.TrackRepository;
 import com.avtdr.vehicletracks.track.model.Track;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.geotools.geojson.GeoJSON;
+import org.geotools.geojson.geom.GeometryJSON;
+import org.geotools.geometry.GeometryBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ public class GeoServiceImpl implements GeoService {
     @Override
     @Transactional(readOnly = true)
     public GeoJson getAlltracksGeoJson() {
+        //GeoJSON geo = GeoJSON.write();
         List<Track> tracks = trackRepository.findAll();
         if (tracks.isEmpty()) {
             throw new NoSuchElementException("Треки движения транспортных средств отсутствуют в БД");

@@ -1,6 +1,7 @@
 package com.avtdr.vehicletracks.point;
 
 import com.avtdr.vehicletracks.point.model.Point;
+import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +32,15 @@ public interface PointRepository extends JpaRepository<Point, Long> {
             " FROM point where video_id = ?1))",
             nativeQuery = true)
     Long getTrackDurationByVideoId(Long videoId);
+
+    @Query(value = "SELECT track_id, p.video_id, " +
+            "EXTRACT(epoch FROM (MAX(point_datetime) - MIN(point_datetime))) as duration, " +
+            "avg(velocity) as avgVelocity, " +
+            "ST_LengthSpheroid(ST_MakeLine(p.location ORDER BY point_id), 'SPHEROID[\"WGS 84\",6378137,298.257223563]') as distance " +
+            "FROM point as p inner join track as t on p.video_id = t.video_id " +
+            "group by p.video_id, track_id " +
+            "order by track_id",
+            nativeQuery = true)
+    List<TrackSummary> findAllTrackSummary();
 }
+
