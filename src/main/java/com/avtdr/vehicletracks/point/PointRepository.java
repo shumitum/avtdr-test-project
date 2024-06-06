@@ -28,25 +28,19 @@ public interface PointRepository extends JpaRepository<Point, Long> {
             "where (t.device.deviceId = :deviceId)))")
     Optional<Point> getMaxVelocityPointByDeviceId(@Param("deviceId") String deviceId);
 
-    @Query(value = "SELECT track_id as trackId, p.video_id as videoId, " +
-            "EXTRACT(epoch FROM (MAX(point_datetime) - MIN(point_datetime))) as duration, " +
+    @Query(value = "select track_id as trackId, p.video_id as videoId, " +
+            "EXTRACT(epoch from (MAX(point_datetime) - MIN(point_datetime))) as duration, " +
             "avg(velocity) as avgVelocity, " +
-            "ST_LengthSpheroid(ST_MakeLine(p.location ORDER BY p.point_id), 'SPHEROID[\"WGS 84\",6378137,298.257223563]') as distance " +
-            "FROM point as p inner join track as t on p.video_id = t.video_id " +
+            "ST_LengthSpheroid(ST_MakeLine(p.location order by p.point_id), 'SPHEROID[\"WGS 84\",6378137,298.257223563]') as distance " +
+            "from point as p inner join track as t on p.video_id = t.video_id " +
             "group by p.video_id, t.track_id " +
             "order by t.track_id",
             nativeQuery = true)
     List<TrackSummary> findAllTrackSummary();
 
-    //@Query("select new com.avtdr.vehicletracks.track.dto.TrackLine(t.trackId, p.videoId, (cast(ST_MakeLine(p.location) as org.locationtech.jts.geom.LineString))) " +
-    //        "from Point as p inner join Track t on p.videoId = t.videoId " +
-    //        "group by p.videoId, t.trackId " +
-    //        "order by t.trackId")
-    //List<TrackLineDto> findAllTracksGroupByTrackIdAndVideoId();
-
-    @Query(value = "SELECT json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(g.*)\\:\\:json)) " +
-            "FROM (SELECT t.track_id, p.video_id, ST_MakeLine(p.location) " +
-            "FROM point as p inner join track as t on p.video_id = t.video_id " +
+    @Query(value = "select json_build_object('type', 'FeatureCollection', 'features', json_agg(ST_AsGeoJSON(g.*)\\:\\:json)) " +
+            "from (select t.track_id, p.video_id, ST_MakeLine(p.location) " +
+            "from point as p inner join track as t on p.video_id = t.video_id " +
             "group by p.video_id, t.track_id " +
             "order by track_id) as g",
             nativeQuery = true)
