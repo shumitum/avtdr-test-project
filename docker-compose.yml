@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   avtdr-db:
-    image: postgis/postgis:12-3.4-alpine
+    image: postgis/postgis:15-3.4-alpine
     restart: always
     container_name: avtdr_tracks_db
     ports:

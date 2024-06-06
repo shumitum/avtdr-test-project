@@ -3,6 +3,7 @@ package com.avtdr.vehicletracks.point.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.locationtech.jts.geom.Point;
 
 import java.time.ZonedDateTime;
 
@@ -18,6 +19,9 @@ public class MaxVelocityPointDto {
 
     @Schema(description = "Долгота в градусах", example = "49.2257039")
     private Double lon;
+
+    @Schema(description = "Координаты точки lon, lat", example = "49.2257039, 55.8704392")
+    private Point location;
 
     @Schema(description = "Скорость транспортного средства м/c", example = "8.058734893798828")
     private Double velocity;

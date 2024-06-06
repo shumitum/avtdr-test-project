@@ -2,7 +2,6 @@ package com.avtdr.vehicletracks.track;
 
 import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
-import com.avtdr.vehicletracks.track.dto.TrackSummaryDto;
 import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import com.avtdr.vehicletracks.track.validation.TimeValidationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,15 +59,8 @@ public class TrackController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
-    public List<TrackSummaryDto> getAllTracks() {
+    public List<TrackSummary> getAllTracks() {
         log.info("Запрос на получение списка треков");
         return trackService.getAllTracks();
-    }
-
-    @GetMapping("test")
-    @ResponseStatus(HttpStatus.OK)
-    public List<TrackSummary> getAllTracksTest() {
-        log.info("Запрос на получение списка треков");
-        return trackService.getAllTracksTest();
     }
 }

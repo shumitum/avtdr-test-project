@@ -29,6 +29,6 @@ class GeoControllerTest {
                 .andExpect(status().isOk());
 
         verify(geoService, times(1))
-                .getAlltracksGeoJson();
+                .getAllTracksGeoJson();
     }
 }

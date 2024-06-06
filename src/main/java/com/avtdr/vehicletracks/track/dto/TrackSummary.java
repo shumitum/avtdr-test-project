@@ -1,9 +1,9 @@
 package com.avtdr.vehicletracks.track.dto;
 
 public interface TrackSummary {
-    Long getTrack_id();
+    Long getTrackId();
 
-    Long getVideo_id();
+    Long getVideoId();
 
     Long getDuration();
 

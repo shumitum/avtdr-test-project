@@ -38,6 +38,9 @@ public class Point {
     @Schema(description = "Долгота в градусах", example = "49.2257039")
     private Double lon;
 
+    @Column(name = "location", columnDefinition = "geometry(Point,4326)")
+    private org.locationtech.jts.geom.Point location;
+
     @NotNull
     @Column(name = "bearing")
     @Schema(description = "Угол направления движения в градусах", example = "150.83277893066406")

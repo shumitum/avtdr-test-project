@@ -1,6 +1,5 @@
 package com.avtdr.vehicletracks.geo;
 
-import com.avtdr.vehicletracks.geo.geojson.GeoJson;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +21,8 @@ public class GeoController {
 
     @GetMapping("/tracks/all")
     @ResponseStatus(HttpStatus.OK)
-    public GeoJson getAllTracksGeoJson() {
+    public String getAllTracksGeoJson() {
         log.info("Запрос всех треков в формате GeoJson");
-        return geoService.getAlltracksGeoJson();
+        return geoService.getAllTracksGeoJson();
     }
 }

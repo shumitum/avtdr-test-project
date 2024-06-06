@@ -2,7 +2,7 @@ package com.avtdr.vehicletracks.track;
 
 import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
-import com.avtdr.vehicletracks.track.dto.TrackSummaryDto;
+import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -30,9 +31,12 @@ class TrackServiceImplIntegrationTest {
     /**
      * Не забывать запускать докер перед тестами
      */
+    static DockerImageName postgisImage = DockerImageName.parse("postgis/postgis:15-3.4-alpine")
+            .asCompatibleSubstituteFor("postgres");
+
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
+    static PostgreSQLContainer<?> postgis = new PostgreSQLContainer<>(postgisImage);
 
     private final TrackService trackService;
 
@@ -74,7 +78,7 @@ class TrackServiceImplIntegrationTest {
 
     @Test
     void getAllTracks_whenInvoke_thenReturnListOfAllTracks() {
-        List<TrackSummaryDto> allTracks = trackService.getAllTracks();
+        List<TrackSummary> allTracks = trackService.getAllTracks();
 
         assertEquals(16, allTracks.size());
         assertEquals(567, allTracks.get(0).getDuration());

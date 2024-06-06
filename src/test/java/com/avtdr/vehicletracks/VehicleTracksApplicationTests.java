@@ -6,6 +6,7 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -16,14 +17,17 @@ class VehicleTracksApplicationTests {
     /**
      * Не забывать запускать докер перед тестами
      */
+    static DockerImageName postgisImage = DockerImageName.parse("postgis/postgis:15-3.4-alpine")
+            .asCompatibleSubstituteFor("postgres");
+
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
+    static PostgreSQLContainer<?> postgis = new PostgreSQLContainer<>(postgisImage);
 
     @Test
     void connectionEstablished() {
-        assertThat(postgres.isCreated()).isTrue();
-        assertThat(postgres.isRunning()).isTrue();
+        assertThat(postgis.isCreated()).isTrue();
+        assertThat(postgis.isRunning()).isTrue();
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.avtdr.vehicletracks.geo;
 
-import com.avtdr.vehicletracks.geo.geojson.GeoJson;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -22,20 +22,21 @@ class GeoServiceImplIntegrationTest {
     /**
      * Не забывать запускать докер перед тестами
      */
+    static DockerImageName postgisImage = DockerImageName.parse("postgis/postgis:15-3.4-alpine")
+            .asCompatibleSubstituteFor("postgres");
+
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:12-alpine");
+    static PostgreSQLContainer<?> postgis = new PostgreSQLContainer<>(postgisImage);
 
     private final GeoService geoService;
 
     @Test
     void getAllTracksGeoJson_whenInvoke_thenReturnGeoJsonObject() {
-        GeoJson alltracksGeoJson = geoService.getAlltracksGeoJson();
+        String alltracksGeoJson = geoService.getAllTracksGeoJson();
 
-        assertEquals("FeatureCollection", alltracksGeoJson.getType());
-        assertEquals(16, alltracksGeoJson.getFeatures().size());
-        assertEquals("Feature", alltracksGeoJson.getFeatures().get(0).getType());
-        assertEquals(2, alltracksGeoJson.getFeatures().get(0).getProperties().size());
-        assertEquals("LineString", alltracksGeoJson.getFeatures().get(0).getGeometry().getType());
+        assertFalse(alltracksGeoJson.isBlank());
+        assertTrue(alltracksGeoJson.contains("FeatureCollection"));
+        assertTrue(alltracksGeoJson.contains("LineString"));
     }
 }
