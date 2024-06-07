@@ -15,6 +15,6 @@ public class GeoServiceImpl implements GeoService {
     @Override
     @Transactional(readOnly = true)
     public String getAllTracksGeoJson() {
-        return pointRepository.getTracksJsonRepresentation();
+        return pointRepository.findTracksJsonRepresentation();
     }
 }

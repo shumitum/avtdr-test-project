@@ -8,6 +8,9 @@ import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import com.avtdr.vehicletracks.utils.PageParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +29,14 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public List<Point> getTrackPoints(String deviceId, ZonedDateTime rangeStart, ZonedDateTime rangeEnd, int from, int size) {
         deviceService.checkDeviceExistence(deviceId);
-        return pointRepository.getTrackPoints(deviceId, rangeStart, rangeEnd, PageParam.of(from, size));
+        return pointRepository.findTrackPoints(deviceId, rangeStart, rangeEnd, PageParam.of(from, size));
     }
 
     @Override
     @Transactional(readOnly = true)
     public MaxVelocityPointDto getMaxVelocityPoint(String deviceId) {
         deviceService.checkDeviceExistence(deviceId);
-        return pointRepository.getMaxVelocityPointByDeviceId(deviceId)
+        return pointRepository.findMaxVelocityPointByDeviceId(deviceId)
                 .orElseThrow(() -> new NoSuchElementException(
                         String.format("Данные по скорости для устройства с deviceID=%s отсутствуют", deviceId)));
     }
@@ -42,5 +45,12 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public List<TrackSummary> getAllTracks() {
         return pointRepository.findAllTrackSummary();
+    }
+
+    @Override
+    public List<Point> getPointsWithinRadius(Double lon, Double lat, Double radius) {
+        GeometryFactory geoFactory = new GeometryFactory(new PrecisionModel(), 4326);
+        org.locationtech.jts.geom.Point point = geoFactory.createPoint(new Coordinate(lon, lat));
+        return pointRepository.findPointsWithinRadius(point, radius);
     }
 }

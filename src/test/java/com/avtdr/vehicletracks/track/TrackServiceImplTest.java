@@ -38,7 +38,7 @@ class TrackServiceImplTest {
 
     @Test
     void getTrackPoints_whenInvokeWithValidParameters_thenReturnListOfTrackPoints() {
-        when(pointRepository.getTrackPoints("32e59c906a958812", rangeStart, rangeEnd, PageParam.of(0, 10)))
+        when(pointRepository.findTrackPoints("32e59c906a958812", rangeStart, rangeEnd, PageParam.of(0, 10)))
                 .thenReturn(Collections.emptyList());
 
         List<Point> trackPoints = trackService.getTrackPoints("32e59c906a958812", rangeStart, rangeEnd, 0, 10);
@@ -53,6 +53,6 @@ class TrackServiceImplTest {
         assertThrows(NoSuchElementException.class, () -> trackService.getTrackPoints("32e59c906a958812", rangeStart, rangeEnd, 0, 10));
 
         verify(pointRepository, times(0))
-                .getTrackPoints("32e59c906a958812", rangeStart, rangeEnd, PageParam.of(0, 10));
+                .findTrackPoints("32e59c906a958812", rangeStart, rangeEnd, PageParam.of(0, 10));
     }
 }

@@ -13,4 +13,6 @@ public interface TrackService {
     MaxVelocityPointDto getMaxVelocityPoint(String deviceId);
 
     List<TrackSummary> getAllTracks();
+
+    List<Point> getPointsWithinRadius(Double lon, Double lat, Double radius);
 }
