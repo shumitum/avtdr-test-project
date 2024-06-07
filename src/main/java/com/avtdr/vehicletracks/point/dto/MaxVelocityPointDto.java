@@ -14,12 +14,6 @@ public class MaxVelocityPointDto {
     @Schema(description = "ID точки", example = "1")
     private Long pointId;
 
-    @Schema(description = "Широта в градусах", example = "55.8704392")
-    private Double lat;
-
-    @Schema(description = "Долгота в градусах", example = "49.2257039")
-    private Double lon;
-
     @Schema(description = "Координаты точки lon, lat", example = "49.2257039, 55.8704392")
     private Point location;
 

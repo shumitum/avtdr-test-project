@@ -28,16 +28,6 @@ public class Point {
     @Schema(description = "ID видео", example = "1687154445296")
     private Long videoId;
 
-    @NotNull
-    @Column(name = "lat")
-    @Schema(description = "Широта в градусах", example = "55.8704392")
-    private Double lat;
-
-    @NotNull
-    @Column(name = "lon")
-    @Schema(description = "Долгота в градусах", example = "49.2257039")
-    private Double lon;
-
     @Column(name = "location", columnDefinition = "geometry(Point,4326)")
     private org.locationtech.jts.geom.Point location;
 
