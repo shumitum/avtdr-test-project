@@ -14,7 +14,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     @Transactional(readOnly = true)
     public void checkDeviceExistence(String deviceId) {
-        if (!deviceRepository.existsById(deviceId)) {
+        if (deviceId != null && !deviceRepository.existsById(deviceId)) {
             throw new NoSuchElementException(String.format("Устройства с deviceID=%s не существует", deviceId));
         }
     }

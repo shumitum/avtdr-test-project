@@ -1,5 +1,6 @@
 package com.avtdr.vehicletracks.point;
 
+import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
 import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import org.springframework.data.domain.PageRequest;
@@ -22,11 +23,12 @@ public interface PointRepository extends JpaRepository<Point, Long> {
                                @Param("rangeEnd") ZonedDateTime rangeEnd,
                                PageRequest page);
 
-    @Query("select p from Point as p " +
+    @Query("select new com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto(p.pointId, p.location, p.velocity, p.pointDateTime) " +
+            "from Point as p " +
             "where (p.velocity = (select max(p.velocity) from Point as p " +
             "left join Track as t on p.videoId = t.videoId " +
             "where (t.device.deviceId = :deviceId)))")
-    Optional<Point> getMaxVelocityPointByDeviceId(@Param("deviceId") String deviceId);
+    Optional<MaxVelocityPointDto> getMaxVelocityPointByDeviceId(@Param("deviceId") String deviceId);
 
     @Query(value = "select track_id as trackId, p.video_id as videoId, " +
             "EXTRACT(epoch from (MAX(point_datetime) - MIN(point_datetime))) as duration, " +
@@ -46,4 +48,3 @@ public interface PointRepository extends JpaRepository<Point, Long> {
             nativeQuery = true)
     String getTracksJsonRepresentation();
 }
-

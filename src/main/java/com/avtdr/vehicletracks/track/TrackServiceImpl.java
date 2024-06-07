@@ -1,7 +1,6 @@
 package com.avtdr.vehicletracks.track;
 
 import com.avtdr.vehicletracks.device.DeviceService;
-import com.avtdr.vehicletracks.point.PointMapper;
 import com.avtdr.vehicletracks.point.PointRepository;
 import com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto;
 import com.avtdr.vehicletracks.point.model.Point;
@@ -22,7 +21,6 @@ import java.util.NoSuchElementException;
 public class TrackServiceImpl implements TrackService {
     private final PointRepository pointRepository;
     private final DeviceService deviceService;
-    private final PointMapper pointMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -35,10 +33,9 @@ public class TrackServiceImpl implements TrackService {
     @Transactional(readOnly = true)
     public MaxVelocityPointDto getMaxVelocityPoint(String deviceId) {
         deviceService.checkDeviceExistence(deviceId);
-        final Point point = pointRepository.getMaxVelocityPointByDeviceId(deviceId)
+        return pointRepository.getMaxVelocityPointByDeviceId(deviceId)
                 .orElseThrow(() -> new NoSuchElementException(
                         String.format("Данные по скорости для устройства с deviceID=%s отсутствуют", deviceId)));
-        return pointMapper.toMaxVelocityPointDto(point);
     }
 
     @Override
