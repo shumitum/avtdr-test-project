@@ -64,7 +64,7 @@ public class TrackController {
         return trackService.getAllTracks();
     }
 
-    @GetMapping("/within-radius")
+    @GetMapping("/points-within-radius")
     @ResponseStatus(HttpStatus.OK)
     public List<Point> getPointsWithinRadius(@Parameter(description = "Долгота точки в градусах", example = "49.1025455")
                                              @RequestParam(name = "lon") Double lon,

@@ -6,14 +6,20 @@ services:
       - "8080:8080"
     depends_on:
       - avtdr-db
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://avtdr-db:6540/tracks_db # следует указывать host-port
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://avtdr-db:5432/tracks_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
   avtdr-db:
     image: postgis/postgis:15-3.4-alpine
-    restart: always
+    restart: on-failure
     container_name: avtdr_tracks_db
     ports:
       - "6540:5432" #host/container
@@ -21,13 +27,3 @@ services:
       - POSTGRES_DB=tracks_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-
- # avtdr-db:
- #   image: postgres:12-alpine
- #   container_name: avtdr_tracks_db
- #   ports:
- #     - "6540:5432"
- #   environment:
- #     - POSTGRES_DB=tracks_db
- #     - POSTGRES_USER=postgres
- #     - POSTGRES_PASSWORD=postgres

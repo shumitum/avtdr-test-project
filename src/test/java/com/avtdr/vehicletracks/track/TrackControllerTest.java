@@ -99,4 +99,18 @@ class TrackControllerTest {
         verify(trackService, times(1))
                 .getAllTracks();
     }
+
+    @Test
+    @SneakyThrows
+    void getPointsWithinRadius_whenInvokedWithCorrectParams_thenReturnOkStatus() {
+        mockMvc.perform(get("/tracks/points-within-radius")
+                        .param("lon", "49.1025455")
+                        .param("lat", "55.7964352")
+                        .param("radius", "20")
+                        .contentType("application/json"))
+                .andExpect(status().isOk());
+
+        verify(trackService, times(1))
+                .getPointsWithinRadius(49.1025455, 55.7964352, 20.0);
+    }
 }

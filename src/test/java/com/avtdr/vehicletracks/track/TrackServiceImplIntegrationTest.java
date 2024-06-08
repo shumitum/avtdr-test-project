@@ -83,4 +83,13 @@ class TrackServiceImplIntegrationTest {
         assertEquals(16, allTracks.size());
         assertEquals(567, allTracks.get(0).getDuration());
     }
+
+    @Test
+    void getPointsWithinRadius_whenInvoke_thenReturnListOfPoints() {
+        List<Point> points = trackService.getPointsWithinRadius(49.1023785, 55.7965796, 20.0);
+
+        assertEquals(18, points.size());
+        assertEquals(4557, points.get(0).getPointId());
+        assertEquals(4570, points.get(17).getPointId());
+    }
 }
