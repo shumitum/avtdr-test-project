@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Тестовое задание. Работа с геоданными",
+                title = "Работа с геоданными",
                 version = "1.0",
                 description = "Documentation \"Работа с геоданными\" v1.0"),
 

@@ -6,6 +6,9 @@ import com.avtdr.vehicletracks.track.dto.TrackSummary;
 import com.avtdr.vehicletracks.track.validation.TimeValidationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -31,13 +34,17 @@ public class TrackController {
     @GetMapping("/points")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Запрос на получение списка точек",
-            description = "Эндпоинт принимает ID устройства, дату и время начала и конца выборки " +
+            description = "Данный эндпоинт принимает ID устройства, дату и время начала и конца выборки " +
                     "(в формате - 2023-06-19T06:01:00Z) и параметры пагинации (номер страницы и кол-во элементов на ней.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Время начала выборки должны быть раньше времени конца выборки", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Устройства с указанным deviceID не существует", content = @Content)
+    })
     public List<Point> getTrackPoints(@Parameter(description = "ID устройства", example = "32e59c906a958812")
                                       @RequestParam(name = "deviceId", required = false) String deviceId,
-                                      @Parameter(description = "Дата и время начала выборки", example = "2023-06-19T06:01:00Z")
+                                      @Parameter(description = "Дата и время начала выборки (ZonedDateTime)", example = "2023-06-19T06:01:00Z")
                                       @RequestParam(name = "rangeStart", required = false) ZonedDateTime rangeStart,
-                                      @Parameter(description = "Дату и время конца выборки", example = "2023-06-19T06:02:00Z")
+                                      @Parameter(description = "Дату и время конца выборки (ZonedDateTime)", example = "2023-06-19T06:02:00Z")
                                       @RequestParam(name = "rangeEnd", required = false) ZonedDateTime rangeEnd,
                                       @Parameter(description = "Номер страницы")
                                       @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero int from,
@@ -51,6 +58,11 @@ public class TrackController {
 
     @GetMapping("/device/{deviceId}/max-velocity-point")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Запрос точки в которой была достигнута максимальная скорость по ID устройства",
+            description = "Данный эндпоинт возвращает точку в которой была достигнута максимальная скорость")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "404", description = "Данные по скорости для устройства с указанным deviceID отсутствуют", content = @Content)
+    })
     public MaxVelocityPointDto getMaxVelocityPoint(@Parameter(description = "ID устройства", example = "32e59c906a958812")
                                                    @PathVariable("deviceId") String deviceId) {
         log.info("Запрос на получение точки с максимальной скоростью устройства с ID={}", deviceId);
@@ -59,6 +71,9 @@ public class TrackController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Запрос данных по каждому треку",
+            description = "Данный эндпоинт возвращает список треков, где для каждого трека будет указана длительность" +
+                    " трека, средняя скорость и пройденное расстояние")
     public List<TrackSummary> getAllTracks() {
         log.info("Запрос на получение списка треков");
         return trackService.getAllTracks();
@@ -66,6 +81,9 @@ public class TrackController {
 
     @GetMapping("/points-within-radius")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Поиск точек, находящихся в указанном радиусе от переданной точки",
+            description = "Список точек, находящихся в указанном радиусе (в метрах) от точки, с заданной долготой и" +
+                    " широтой, и упорядоченных по возрастанию удаленности от неё.")
     public List<Point> getPointsWithinRadius(@Parameter(description = "Долгота точки в градусах", example = "49.1025455")
                                              @RequestParam(name = "lon") Double lon,
                                              @Parameter(description = "Широта точки в градусах", example = "55.7964352")

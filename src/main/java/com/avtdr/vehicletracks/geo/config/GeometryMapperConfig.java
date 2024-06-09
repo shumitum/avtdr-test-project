@@ -1,4 +1,4 @@
-package com.avtdr.vehicletracks.geo.geojson;
+package com.avtdr.vehicletracks.geo.config;
 
 import com.bedatadriven.jackson.datatype.jts.serialization.GeometrySerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;

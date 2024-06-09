@@ -14,9 +14,10 @@ import java.util.NoSuchElementException;
 @Slf4j
 @RestControllerAdvice
 public class ErrorHandler {
-    public record ErrorResponse(@Schema(description = "Error message", example = "must not be blank. Value: null")String message,
-                                @Schema(description = "Error status", example = "400 BAD_REQUEST") String status,
-                                @Schema(example = "user/1/tasks") String path) {
+    public record ErrorResponse(
+            @Schema(description = "Error message", example = "must not be blank. Value: null") String message,
+            @Schema(description = "Error status", example = "400 BAD_REQUEST") String status,
+            @Schema(example = "user/1/tasks") String path) {
     }
 
     @ExceptionHandler
