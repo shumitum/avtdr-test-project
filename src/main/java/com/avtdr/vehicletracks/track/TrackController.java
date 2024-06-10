@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
@@ -85,11 +87,11 @@ public class TrackController {
             description = "Список точек, находящихся в указанном радиусе (в метрах) от точки, с заданной долготой и" +
                     " широтой, и упорядоченных по возрастанию удаленности от неё.")
     public List<Point> getPointsWithinRadius(@Parameter(description = "Долгота точки в градусах", example = "49.1025455")
-                                             @RequestParam(name = "lon") Double lon,
+                                             @RequestParam(name = "lon") @Min(-180) @Max(+180) Double lon,
                                              @Parameter(description = "Широта точки в градусах", example = "55.7964352")
-                                             @RequestParam(name = "lat") Double lat,
+                                             @RequestParam(name = "lat") @Min(-90) @Max(+90) Double lat,
                                              @Parameter(description = "Радиус поиска в метрах", example = "20")
-                                             @RequestParam(name = "radius") Double radius) {
+                                             @RequestParam(name = "radius") @Positive Double radius) {
         return trackService.getPointsWithinRadius(lon, lat, radius);
     }
 }
