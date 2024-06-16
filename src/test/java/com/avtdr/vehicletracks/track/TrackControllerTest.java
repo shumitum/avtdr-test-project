@@ -1,6 +1,6 @@
 package com.avtdr.vehicletracks.track;
 
-import com.avtdr.vehicletracks.track.validation.TimeValidationService;
+import com.avtdr.vehicletracks.track.validation.TimeValidationServiceImpl;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class TrackControllerTest {
     private TrackService trackService;
 
     @MockBean
-    private TimeValidationService timeValidationService;
+    private TimeValidationServiceImpl timeValidationService;
 
     @Test
     @SneakyThrows
