@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 @Data
 @AllArgsConstructor
 public class MaxVelocityPointDto {
-    private static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ssX";
+    public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ssX";
 
     @Schema(description = "ID точки", example = "1")
     private Long pointId;

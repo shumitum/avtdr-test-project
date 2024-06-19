@@ -1,11 +1,14 @@
 package com.avtdr.vehicletracks.point.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+
+import static com.avtdr.vehicletracks.point.dto.MaxVelocityPointDto.DATE_TIME_PATTERN;
 
 @Entity
 @Builder
@@ -44,5 +47,6 @@ public class Point {
     @NotNull
     @Column(name = "point_datetime")
     @Schema(description = "Время проезда точки", example = "2023-06-19 06:55:20Z")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_TIME_PATTERN)
     private ZonedDateTime pointDateTime;
 }
